@@ -1,7 +1,7 @@
 import json
 import requests
 import subprocess
-start_k = 2
+start_k = 1
 finish_k = 1180
 for k in range(start_k, finish_k):
 	req = 'https://api.github.com/search/repositories?q=+language:kotlin&page=%d' % k
