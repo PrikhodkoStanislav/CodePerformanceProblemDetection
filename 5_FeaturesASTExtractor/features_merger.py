@@ -4,7 +4,7 @@ featuresFileName = "features.tsv"
 featuresPSIFileName = "featuresPSI.tsv"
 featuresUnifiedFileName = "featuresUnified.tsv"
 
-numberOfPSIFeatures = 6
+numberOfPSIFeatures = 12
 NaNLine = ('\t' + "NaN") * numberOfPSIFeatures
 
 def feature_merger():
