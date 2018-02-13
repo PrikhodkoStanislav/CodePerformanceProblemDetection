@@ -49,28 +49,28 @@ def feature_extractor_PSI():
                 featureMaxNumberOfChildren = 0.0
                 featureMaxNumberOfSpacesWithRatio = 0.0
                 featureAVGNumberOfSpacesWithRatio = 0.0
-				
-				featureNumberOfPSIElements = 0.0
-				featureNumberOfPsiWhiteSpace = 0.0
-				featureAVGNumberOfPSIElements = 0.0
-				featureAVGNumberOfPsiWhiteSpace = 0.0
-				featureNumberOfLines = 0.0
-				featureAVGLengthOfLines = 0.0
-				
-				listOfLengthLines = []
+                
+                featureNumberOfPSIElements = 0.0
+                featureNumberOfPsiWhiteSpace = 0.0
+                featureAVGNumberOfPSIElements = 0.0
+                featureAVGNumberOfPsiWhiteSpace = 0.0
+                featureNumberOfLines = 0.0
+                featureAVGLengthOfLines = 0.0
+                
+                listOfLengthLines = []
 
                 listOfNumberOfSpacesWithRatio = []
                 # featureAVGNumberOfChildren = 0.0
 
                 numNodes = 0
                 numChildren = 0
-				numLines = 0
+                numLines = 0
                 maxDepthElement = 0
                 maxChildrenNumber = 0
                 for psiLine in psiFile:
                     offset = 0
                     numSpaces = 0
-					numLines += 1
+                    numLines += 1
                     f = True
                     for c in psiLine:
                         if c == ' ':
@@ -87,15 +87,15 @@ def feature_extractor_PSI():
                             f = False
                         else:
                             f = False
-					if "PsiElement" in psiLine:
-						featureNumberOfPSIElements += 1.0
-					if "PsiWhiteSpace" in psiLine:	
-						featureNumberOfPsiWhiteSpace += 1.0
+                    if "PsiElement" in psiLine:
+                        featureNumberOfPSIElements += 1.0
+                    if "PsiWhiteSpace" in psiLine:  
+                        featureNumberOfPsiWhiteSpace += 1.0
                     depth = offset // 2
                     maxDepthElement = max(maxDepthElement, depth)
                     numSpacesWithRatio = numSpaces / len(psiLine)
                     listOfNumberOfSpacesWithRatio.append(numSpacesWithRatio)
-					listOfLengthLines.append(len(psiLine))
+                    listOfLengthLines.append(len(psiLine))
                     featureMaxNumberOfSpacesWithRatio = max(featureMaxNumberOfSpacesWithRatio, numSpacesWithRatio)
                 featureMaxDepthPSI = float(maxDepthElement)
                 featureNumberOfNodes = float(numNodes)
@@ -103,17 +103,17 @@ def feature_extractor_PSI():
                 featureMaxNumberOfChildren = float(maxChildrenNumber)
                 featureAVGNumberOfSpacesWithRatio =\
                     sum(listOfNumberOfSpacesWithRatio) / len(listOfNumberOfSpacesWithRatio)
-				featureAVGLengthOfLines = \
+                featureAVGLengthOfLines = \
                     sum(listOfLengthLines) / numLines
-				featureAVGNumberOfPSIElements = featureNumberOfPSIElements / numLines
-				featureAVGNumberOfPsiWhiteSpace = featureNumberOfPsiWhiteSpace / numLines
-				featureNumberOfLines = float(numLines)
+                featureAVGNumberOfPSIElements = featureNumberOfPSIElements / numLines
+                featureAVGNumberOfPsiWhiteSpace = featureNumberOfPsiWhiteSpace / numLines
+                featureNumberOfLines = float(numLines)
                 featuresList = [ featureMaxDepthPSI, featureMaxNumberOfChildren, featureNumberOfNodes,
                                  featureNumberOfSpaces, featureMaxNumberOfSpacesWithRatio,
                                  featureAVGNumberOfSpacesWithRatio,
-								 featureNumberOfPSIElements, featureNumberOfPsiWhiteSpace,
-								 featureAVGNumberOfPSIElements, featureAVGNumberOfPsiWhiteSpace,
-								 featureNumberOfLines, featureAVGLengthOfLines ]
+                                 featureNumberOfPSIElements, featureNumberOfPsiWhiteSpace,
+                                 featureAVGNumberOfPSIElements, featureAVGNumberOfPsiWhiteSpace,
+                                 featureNumberOfLines, featureAVGLengthOfLines ]
                 featuresFile.write(str(id))
                 for feature in featuresList:
                     featuresFile.write("\t" + str(feature))

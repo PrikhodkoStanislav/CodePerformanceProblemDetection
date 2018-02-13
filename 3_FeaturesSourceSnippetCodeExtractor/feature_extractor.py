@@ -58,13 +58,13 @@ def feature_extractor_sourcecode_snippets():
                         featureWhiteSpaceRatio = 0.0
                         featureNumTabsLeadLines = 0.0
                         featureAvgLineLength = 0.0
-						
-						featureNumLinesWithVals = 0.0
-						featureNumLinesWithVars = 0.0
-						featureNumLinesWithEquals = 0.0
-						featureNumOpenBrackets = 0.0
-						featureNumCloseBrackets = 0.0
-						featureNumOpenNumCloseBrackets = 0.0
+                        
+                        featureNumLinesWithVals = 0.0
+                        featureNumLinesWithVars = 0.0
+                        featureNumLinesWithEquals = 0.0
+                        featureNumOpenBrackets = 0.0
+                        featureNumCloseBrackets = 0.0
+                        featureNumOpenNumCloseBrackets = 0.0
 
                         numSpaces = 0
                         numTabs = 0
@@ -81,16 +81,16 @@ def feature_extractor_sourcecode_snippets():
                                     numSpaces += 1
                                 if symbol == '\t':
                                     numTabs += 1
-								if symbol == '{':
+                                if symbol == '{':
                                     featureNumOpenBrackets += 1.0
-								if symbol == '}':
+                                if symbol == '}':
                                     featureNumCloseBrackets += 1.0
-								if symbol == '=':
-									featureNumLinesWithEquals += 1.0
-							if "val" in line:
-								featureNumLinesWithVals += 1.0
-							if "var" in line:
-								featureNumLinesWithVars += 1.0
+                                if symbol == '=':
+                                    featureNumLinesWithEquals += 1.0
+                            if "val" in line:
+                                featureNumLinesWithVals += 1.0
+                            if "var" in line:
+                                featureNumLinesWithVars += 1.0
                             itLength = len(line)
                             lengthWithoutNewLine += itLength
                             if itLength > 0:
@@ -131,16 +131,16 @@ def feature_extractor_sourcecode_snippets():
                             featureAvgLineLength = 0.0
                         else:
                             featureAvgLineLength = length / numNewLines
-							
-						if featureNumOpenBrackets == featureNumCloseBrackets:
-							featureNumOpenNumCloseBrackets = 1.0
-						else:
-							featureNumOpenNumCloseBrackets = 0.0
+                            
+                        if featureNumOpenBrackets == featureNumCloseBrackets:
+                            featureNumOpenNumCloseBrackets = 1.0
+                        else:
+                            featureNumOpenNumCloseBrackets = 0.0
 
                         featuresList = [ featureNumTabs, featureNumSpaces, featureNumEmptyLines,
                                          featureWhiteSpaceRatio, featureNumTabsLeadLines, featureAvgLineLength,
-										 featureNumLinesWithVals, featureNumLinesWithVars, featureNumLinesWithEquals,
-										 featureNumOpenBrackets, featureNumCloseBrackets, featureNumOpenNumCloseBrackets ]
+                                         featureNumLinesWithVals, featureNumLinesWithVars, featureNumLinesWithEquals,
+                                         featureNumOpenBrackets, featureNumCloseBrackets, featureNumOpenNumCloseBrackets ]
 
                         featuresFile.write(str(id))
 
