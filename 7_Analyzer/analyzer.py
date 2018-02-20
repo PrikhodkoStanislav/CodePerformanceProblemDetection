@@ -15,6 +15,8 @@ print(df.info())
 
 print(df.describe())
 
+params = np.array(df.values[:,1:], dtype="float64")
+
 params = scale(params)
 
 X = PCA(n_components=2).fit_transform(params)
@@ -51,4 +53,4 @@ plt.xlim((-7, 7))
 plt.ylim((-7, 7))
 plt.show()
 
-print df[is_inlier == 0]
+print(df[is_inlier == 0])
