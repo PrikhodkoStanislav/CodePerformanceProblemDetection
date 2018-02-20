@@ -15,6 +15,8 @@ print(df.info())
 
 print(df.describe())
 
+params = np.array(df.values[:,1:], dtype="float64")
+
 params = scale(params)
 
 X = PCA(n_components=2).fit_transform(params)
