@@ -59,7 +59,7 @@ def feature_extractor_sourcecode_snippets():
                 c.incFile()
                 for file in os.listdir(pathFolder):
                     path = os.path.join(pathFolder, file)
-                    #print(path)
+                    print(path)
                     if os.path.isfile(path) and (path.find("Snippets_") != -1) and path.endswith(".kt"):
                         c.incSnippets()
                         f = open(path, 'r')
@@ -169,6 +169,63 @@ def feature_extractor_sourcecode_snippets():
                         featureNumLinesWithCBrackets = 0.0
                         featureNumLinesWithCBracketsNormalized = 0.0
 
+                        featureNumAs = 0.0
+                        featureNumLinesWithAs = 0.0
+                        featureNumLinesWithAsNormalized = 0.0
+
+                        featureNumAsSafe = 0.0
+                        featureNumLinesWithAsSafe = 0.0
+                        featureNumLinesWithAsSafeNormalized = 0.0
+
+                        featureNumClass = 0.0
+                        featureNumLinesWithClass = 0.0
+                        featureNumLinesWithClassNormalized = 0.0
+
+                        featureNumDo = 0.0
+                        featureNumLinesWithDo = 0.0
+                        featureNumLinesWithDoNormalized = 0.0
+
+                        featureNumTrue = 0.0
+                        featureNumLinesWithTrue = 0.0
+                        featureNumLinesWithTrueNormalized = 0.0
+
+                        featureNumFalse = 0.0
+                        featureNumLinesWithFalse = 0.0
+                        featureNumLinesWithFalseNormalized = 0.0
+
+                        featureNumFun = 0.0
+                        featureNumLinesWithFun = 0.0
+                        featureNumLinesWithFunNormalized = 0.0
+
+                        featureNumIn = 0.0
+                        featureNumLinesWithIn = 0.0
+                        featureNumLinesWithInNormalized = 0.0
+
+                        featureNumInExclamation = 0.0
+                        featureNumLinesWithInExclamation = 0.0
+                        featureNumLinesWithInExclamationNormalized = 0.0
+
+                        featureNumInterface = 0.0
+                        featureNumLinesWithInterface = 0.0
+                        featureNumLinesWithInterfaceNormalized = 0.0
+
+                        featureNumWordIs = 0.0
+                        featureNumLinesWithWordIs = 0.0
+                        featureNumLinesWithWordIsNormalized = 0.0
+
+                        featureNumWordIsExclamation = 0.0
+                        featureNumLinesWithWordIsExclamation = 0.0
+                        featureNumLinesWithWordIsExclamationNormalized = 0.0
+
+                        featureNumNull = 0.0
+                        featureNumLinesWithNull = 0.0
+                        featureNumLinesWithNullNormalized = 0.0
+
+                        featureNumObject = 0.0
+                        featureNumLinesWithObject= 0.0
+                        featureNumLinesWithObjectNormalized = 0.0
+
+
                         numEmptyLines = 0.0
                         numTabsLeadLines = 0.0
                         numNewLines = 0.0
@@ -267,6 +324,63 @@ def feature_extractor_sourcecode_snippets():
                             if ")" in line:
                                 featureNumLinesWithCBrackets += 1.0
 
+                            featureNumAs += float(line.count("as"))
+                            if "as" in line:
+                                featureNumLinesWithAs += 1.0
+
+                            featureNumAsSafe += float(line.count("as?"))
+                            if "as?" in line:
+                                featureNumLinesWithAsSafe += 1.0
+
+                            featureNumClass += float(line.count("class"))
+                            if "class" in line:
+                                featureNumLinesWithClass += 1.0
+
+                            featureNumDo += float(line.count("do"))
+                            if "do" in line:
+                                featureNumLinesWithDo += 1.0
+
+                            featureNumTrue += float(line.count("true"))
+                            if "true" in line:
+                                featureNumLinesWithTrue += 1.0
+
+                            featureNumFalse += float(line.count("false"))
+                            if "false" in line:
+                                featureNumLinesWithFalse += 1.0
+
+                            featureNumFun += float(line.count("fun"))
+                            if "fun" in line:
+                                featureNumLinesWithFun += 1.0
+
+                            featureNumIn += float(line.count("in"))
+                            if "in" in line:
+                                featureNumLinesWithIn += 1.0
+
+                            featureNumInExclamation += float(line.count("!in"))
+                            if "!in" in line:
+                                featureNumLinesWithInExclamation += 1.0
+
+                            featureNumInterface += float(line.count("interface"))
+                            if "interface" in line:
+                                featureNumLinesWithInterface += 1.0
+
+                            featureNumWordIs += float(line.count("is"))
+                            if "is" in line:
+                                featureNumLinesWithWordIs += 1.0
+
+                            featureNumWordIsExclamation += float(line.count("!is"))
+                            if "!is" in line:
+                                featureNumLinesWithWordIsExclamation += 1.0
+
+                            featureNumNull += float(line.count("null"))
+                            if "null" in line:
+                                featureNumLinesWithNull += 1.0
+
+                            featureNumObject += float(line.count("object"))
+                            if "object" in line:
+                                featureNumLinesWithObject += 1.0
+
+
                             itLength = len(line)
                             lengthWithoutNewLine += float(itLength)
                             if itLength > 0.1:
@@ -329,6 +443,20 @@ def feature_extractor_sourcecode_snippets():
                         featureNumLinesWithBreakNormalized = normalized(featureNumLinesWithBreak, length)
                         featureNumLinesWithOBracketsNormalized = normalized(featureNumLinesWithOBrackets, length)
                         featureNumLinesWithCBracketsNormalized = normalized(featureNumLinesWithCBrackets, length)
+                        featureNumLinesWithAsNormalized = normalized(featureNumLinesWithAs, length)
+                        featureNumLinesWithAsSafeNormalized = normalized(featureNumLinesWithAsSafe, length)
+                        featureNumLinesWithClassNormalized = normalized(featureNumLinesWithClass, length)
+                        featureNumLinesWithDoNormalized = normalized(featureNumLinesWithDo, length)
+                        featureNumLinesWithTrueNormalized = normalized(featureNumLinesWithTrue, length)
+                        featureNumLinesWithFalseNormalized = normalized(featureNumLinesWithFalse, length)
+                        featureNumLinesWithFunNormalized = normalized(featureNumLinesWithFun, length)
+                        featureNumLinesWithInNormalized = normalized(featureNumLinesWithIn, length)
+                        featureNumLinesWithInExclamationNormalized = normalized(featureNumLinesWithInExclamation, length)
+                        featureNumLinesWithInterfaceNormalized = normalized(featureNumLinesWithInterface, length)
+                        featureNumLinesWithWordIsNormalized = normalized(featureNumLinesWithWordIs, length)
+                        featureNumLinesWithWordIsExclamationNormalized = normalized(featureNumLinesWithWordIsExclamation, length)
+                        featureNumLinesWithNullNormalized = normalized(featureNumLinesWithNull, length)
+                        featureNumLinesWithObjectNormalized = normalized(featureNumLinesWithObject, length)
 
                         featuresList = [ featureNumTabs, featureNumTabsNormalized, featureNumSpaces, featureNumSpacesNormalized,
                                          featureNumEmptyLines, featureNumEmptyLinesNormalized,
@@ -354,7 +482,22 @@ def feature_extractor_sourcecode_snippets():
                                          featureNumContinue, featureNumLinesWithContinue, featureNumLinesWithContinueNormalized,
                                          featureNumBreak, featureNumLinesWithBreak, featureNumLinesWithBreakNormalized,
                                          featureNumOBrackets, featureNumLinesWithOBrackets, featureNumLinesWithOBracketsNormalized,
-                                         featureNumCBrackets, featureNumLinesWithCBrackets, featureNumLinesWithCBracketsNormalized ]
+                                         featureNumCBrackets, featureNumLinesWithCBrackets, featureNumLinesWithCBracketsNormalized,
+                                         featureNumAs, featureNumLinesWithAs, featureNumLinesWithAsNormalized,
+                                         featureNumAsSafe, featureNumLinesWithAsSafe, featureNumLinesWithAsSafeNormalized,
+                                         featureNumClass, featureNumLinesWithClass, featureNumLinesWithClassNormalized,
+                                         featureNumDo, featureNumLinesWithDo, featureNumLinesWithDoNormalized,
+                                         featureNumTrue, featureNumLinesWithTrue, featureNumLinesWithTrueNormalized,
+                                         featureNumFalse, featureNumLinesWithFalse, featureNumLinesWithFalseNormalized,
+                                         featureNumFun, featureNumLinesWithFun, featureNumLinesWithFunNormalized,
+                                         featureNumIn, featureNumLinesWithIn, featureNumLinesWithInNormalized,
+                                         featureNumInExclamation, featureNumLinesWithInExclamation, featureNumLinesWithInExclamationNormalized,
+                                         featureNumInterface, featureNumLinesWithInterface, featureNumLinesWithInterfaceNormalized,
+                                         featureNumWordIs, featureNumLinesWithWordIs, featureNumLinesWithWordIsNormalized,
+                                         featureNumWordIsExclamation, featureNumLinesWithWordIsExclamation, featureNumLinesWithWordIsExclamationNormalized,
+                                         featureNumNull, featureNumLinesWithNull, featureNumLinesWithNullNormalized,
+                                         featureNumObject, featureNumLinesWithObject, featureNumLinesWithObjectNormalized
+                                         ]
 
                         featuresFile.write(str(id))
 
