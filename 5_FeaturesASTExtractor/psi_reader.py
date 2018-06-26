@@ -9,11 +9,11 @@ f.close()
 a = json.loads(nodes)
 print(a)
 
-def dfs(a):
+def bfs(a):
     for node in a:
         if 'children' in node:
             print(node)
-            dfs(node['children'])
+            bfs(node['children'])
 
 def childrenNumber(a):
     result = 0
