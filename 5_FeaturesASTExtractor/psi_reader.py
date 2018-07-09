@@ -1,5 +1,6 @@
 import io
 import json
+from collections import *
 
 filename = "Application.kt.json"
 
@@ -85,3 +86,15 @@ print(nodeNumber(a))
 print(treeMap(a, lambda x: successorNumber(x) == 1))
 print(treeMap(a, lambda x: successorNumber(x) == 2))
 print(treeMap(a, lambda x: successorNumber(x) > 2))
+
+# count number of node types and add in dict
+
+def countNodeTypes(a):
+    cnt = Counter()
+    for node in a:
+        cnt[node['type']] += 1
+        if 'children' in node:
+            cnt += countNodeTypes(node['children'])
+    return cnt
+
+print(countNodeTypes(a))
