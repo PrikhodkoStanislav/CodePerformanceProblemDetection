@@ -92,7 +92,8 @@ def treeReduce(tree, func):
     return treeReduceRecursive(tree, func, 0)
 
 print(childrenNumber(a))
-print(nodeNumber(a))
+numberOfNodes = nodeNumber(a)
+print(numberOfNodes)
 
 print(treeMap(a, lambda node: successorNumber(node) == 1))
 print(treeMap(a, lambda node: successorNumber(node) == 2))
@@ -107,6 +108,10 @@ print(treeReduce(a, lambda node, depth: successorNumber(node) == 1 and depth == 
 print(treeReduce(a, lambda node, depth: successorNumber(node) == 2 and depth == 1))
 print(treeReduce(a, lambda node, depth: successorNumber(node) == 2 and depth == 2))
 print(treeReduce(a, lambda node, depth: successorNumber(node) > 2 and depth > 2))
+
+print(numberOfNodes < 15)
+print(numberOfNodes >= 15 and numberOfNodes <= 500)
+print(numberOfNodes > 500)
 
 # count number of node types and add in dict
 
