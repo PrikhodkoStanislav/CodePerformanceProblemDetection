@@ -79,13 +79,34 @@ def treeMap(tree, func):
             result += treeMap(node['children'], func)
     return result
 
+def treeReduce(tree, func):
+    result = 0
+    def treeReduceRecursive(tree, func, depth):
+        result = 0
+        for node in tree:
+            if func(node, depth):
+                result += 1
+            if 'children' in node:
+                result += treeReduceRecursive(node['children'], func, depth + 1)
+        return result
+    return treeReduceRecursive(tree, func, 0)
 
 print(childrenNumber(a))
 print(nodeNumber(a))
 
-print(treeMap(a, lambda x: successorNumber(x) == 1))
-print(treeMap(a, lambda x: successorNumber(x) == 2))
-print(treeMap(a, lambda x: successorNumber(x) > 2))
+print(treeMap(a, lambda node: successorNumber(node) == 1))
+print(treeMap(a, lambda node: successorNumber(node) == 2))
+print(treeMap(a, lambda node: successorNumber(node) > 2))
+
+print(treeReduce(a, lambda _, depth: depth == 1))
+print(treeReduce(a, lambda _, depth: depth == 2))
+print(treeReduce(a, lambda _, depth: depth > 2))
+
+print(treeReduce(a, lambda node, depth: successorNumber(node) == 1 and depth == 1))
+print(treeReduce(a, lambda node, depth: successorNumber(node) == 1 and depth == 2))
+print(treeReduce(a, lambda node, depth: successorNumber(node) == 2 and depth == 1))
+print(treeReduce(a, lambda node, depth: successorNumber(node) == 2 and depth == 2))
+print(treeReduce(a, lambda node, depth: successorNumber(node) > 2 and depth > 2))
 
 # count number of node types and add in dict
 
