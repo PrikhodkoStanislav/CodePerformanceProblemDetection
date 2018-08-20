@@ -1,4 +1,7 @@
+import io
+import json
 import os
+from collections import *
 
 idSnippetsFileName = "SnippetsId.tsv"
 featuresFileName = "featuresPSI.tsv"
@@ -29,6 +32,64 @@ class Counter(object):
     def getSnippets(self):
         return self.snippets
 
+def bfs(a):
+    for node in a:
+        if 'children' in node:
+            print(node)
+            bfs(node['children'])
+
+def childrenNumber(a):
+    result = 0
+    for node in a:
+        if 'children' in node:
+            result += childrenNumber(node['children'])
+        else:
+            result += 1
+    return result
+
+def nodeNumber(a):
+    result = 0
+    for node in a:
+        result += 1
+        if 'children' in node:
+            result += nodeNumber(node['children'])
+    return result
+
+def successorNumber(node):
+    result = 0
+    if 'children' in node:
+        result = len(node['children'])
+    return result
+
+def treeMap(tree, func):
+    result = 0
+    for node in tree:
+        if func(node):
+            result += 1
+        if 'children' in node:
+            result += treeMap(node['children'], func)
+    return result
+
+def treeReduce(tree, func):
+    result = 0
+    def treeReduceRecursive(tree, func, depth):
+        result = 0
+        for node in tree:
+            if func(node, depth):
+                result += 1
+            if 'children' in node:
+                result += treeReduceRecursive(node['children'], func, depth + 1)
+        return result
+    return treeReduceRecursive(tree, func, 0)
+
+def countNodeTypes(a):
+    cnt = Counter()
+    for node in a:
+        cnt[node['type']] += 1
+        if 'children' in node:
+            cnt += countNodeTypes(node['children'])
+    return cnt
+
 
 def feature_extractor_PSI():
     try:
@@ -44,6 +105,33 @@ def feature_extractor_PSI():
             if os.path.exists(path):
                 psiFile = open(path, 'r')
                 # c.incFile()
+                
+                nodes = psiFile.read()
+                a = json.loads(nodes)
+
+                featureChildrenNumber = childrenNumber(a))
+                numberOfNodes = nodeNumber(a)
+                featureNumberOfNodes = numberOfNodes
+
+                featureSuccessorNumberOne = treeMap(a, lambda node: successorNumber(node) == 1)
+                featureSuccessorNumberTwo = treeMap(a, lambda node: successorNumber(node) == 2)
+                featureSuccessorNumberMoreThanTwo = treeMap(a, lambda node: successorNumber(node) > 2)
+
+                featureDepthOne = treeReduce(a, lambda _, depth: depth == 1)
+                featureDepthTwo = treeReduce(a, lambda _, depth: depth == 2)
+                featureDepthMoreThanTwo = treeReduce(a, lambda _, depth: depth > 2)
+
+                featureSuccessorNumberOneDepthOne = treeReduce(a, lambda node, depth: successorNumber(node) == 1 and depth == 1)
+                featureSuccessorNumberOneDepthTwo = treeReduce(a, lambda node, depth: successorNumber(node) == 1 and depth == 2)
+                featureSuccessorNumberTwoDepthOne = treeReduce(a, lambda node, depth: successorNumber(node) == 2 and depth == 1)
+                featureSuccessorNumberTwoDepthTwo = treeReduce(a, lambda node, depth: successorNumber(node) == 2 and depth == 2)
+                featureSuccessorNumberMoreThanTwoDepthMoreThanTwo = treeReduce(a, lambda node, depth: successorNumber(node) > 2 and depth > 2)
+
+                featureNumberOfNodesLess15 = numberOfNodes < 15
+                featureNumberOfNodesMore15 = numberOfNodes >= 15 and numberOfNodes <= 500
+                featureNumberOfNodesMore500 = numberOfNodes > 500
+
+                featureCountNodeTypes = countNodeTypes(a)
 
                 featureMaxDepthPSI = 0.0
                 featureNumberOfNodes = 0.0
@@ -172,7 +260,15 @@ def feature_extractor_PSI():
                                 featureNumberOfLBRACE, featureNumberOfRBRACE, featureNumberOfSAFE_ACCESS,
                                 featureNumberOfEQ, featureNumberOfOPEN_QUOTE, featureNumberOfREGULAR_STRING_PART,
                                 featureNumberOfCLOSING_QUOTE, featureNumberOfAS_SAFE, featureNumberOfELVIS,
-                                featureNumberOfTrue, featureNumberOfFalse]
+                                featureNumberOfTrue, featureNumberOfFalse,
+                                featureChildrenNumber, featureNumberOfNodes, featureSuccessorNumberOne,
+                                featureSuccessorNumberTwo,featureSuccessorNumberMoreThanTwo,featureDepthOne,
+                                featureDepthTwo, featureDepthMoreThanTwo, featureSuccessorNumberOneDepthOne,
+                                featureSuccessorNumberOneDepthTwo, featureSuccessorNumberTwoDepthOne,
+                                featureSuccessorNumberTwoDepthTwo,
+                                featureSuccessorNumberMoreThanTwoDepthMoreThanTwo,
+                                featureNumberOfNodesLess15, featureNumberOfNodesMore15,
+                                featureNumberOfNodesMore500, featureCountNodeTypes]
                 featuresFile.write(str(id))
                 for feature in featuresList:
                     featuresFile.write("\t" + str(feature))
