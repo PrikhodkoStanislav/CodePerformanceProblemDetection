@@ -89,11 +89,11 @@ tsv_writer = csv.writer(file_vector, delimiter='\t', lineterminator='\n')
 
 res_names = []
 for t_t in token_types:
-    res_names.append("count_" + feature)
-    res_names.append("bin_" + feature)
-    res_names.append("tf_" + feature)
-    res_names.append("idf_" + feature)
-    res_names.append("tfidf_" + feature)
+    res_names.append("count_" + t_t)
+    res_names.append("bin_" + t_t)
+    res_names.append("tf_" + t_t)
+    res_names.append("idf_" + t_t)
+    res_names.append("tfidf_" + t_t)
 tsv_writer.writerow(["ID", "Path"] + res_names)
 
 bad_files_step_2 = "bad_files_step_2.txt"
