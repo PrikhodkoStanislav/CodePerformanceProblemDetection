@@ -1,0 +1,3 @@
+Files = 48312
+Lines = 3379396
+Snippets = 230855
